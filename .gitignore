@@ -16,8 +16,13 @@ build/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-/media
 /staticfiles
+
+# Media (except profile images)
+/media/*
+!/media/profile/
+/media/profile/*
+!/media/profile/profile_image.jpg
 
 # IDE
 .vscode/
