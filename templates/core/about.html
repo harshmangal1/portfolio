@@ -65,6 +65,8 @@
                 <div class="glass p-8 rounded-xl">
                     {% if profile and profile.profile_image %}
                     <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-48 h-48 rounded-full object-cover mx-auto mb-6">
+                    {% elif profile %}
+                    <img src="{% static 'images/profile.jpg' %}" alt="{{ profile.name }}" class="w-48 h-48 rounded-full object-cover mx-auto mb-6">
                     {% else %}
                     <div class="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-secondary mx-auto mb-6 flex items-center justify-center">
                         <i class="fas fa-user text-6xl text-white"></i>
