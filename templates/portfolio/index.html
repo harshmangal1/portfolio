@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Portfolio - DevPortfolio{% endblock %}
+
+{% block content %}
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-xl font-bold gradient-text">DevPortfolio</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/#skills" class="hover:text-primary transition-colors">Skills</a>
+                <a href="/#projects" class="hover:text-primary transition-colors">Projects</a>
+                <a href="/#experience" class="hover:text-primary transition-colors">Experience</a>
+                <a href="/#contact" class="hover:text-primary transition-colors">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-4">My <span class="gradient-text">Portfolio</span></h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                A comprehensive showcase of my projects, skills, and experience.
+            </p>
+        </div>
+        
+        <!-- Skills -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <i class="fas fa-code text-primary"></i> Skills
+            </h2>
+            {% if skills_by_category %}
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for category, skills_list in skills_by_category.items %}
+                <div class="glass p-6 rounded-xl">
+                    <h3 class="text-lg font-semibold mb-4 capitalize">{{ category }}</h3>
+                    <div class="space-y-4">
+                        {% for skill in skills_list %}
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>{{ skill.name }}</span>
+                                <span class="text-gray-500">{{ skill.proficiency_level }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full skill-bar" style="width: {{ skill.proficiency_level }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-500 text-center py-8">Add skills in the admin panel</p>
+            {% endif %}
+        </section>
+        
+        <!-- Projects -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <i class="fas fa-project-diagram text-primary"></i> Projects
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for project in projects %}
+                <div class="glass rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+                    {% if project.image %}
+                    <div class="h-48 overflow-hidden">
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover">
+                    </div>
+                    {% else %}
+                    <div class="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-6xl text-gray-400"></i>
+                    </div>
+                    {% endif %}
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">{{ project.description }}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            {% for tech in project.tech_stack|split:"," %}
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">{{ tech.strip }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="flex gap-4">
+                            {% if project.github_link %}
+                            <a href="{{ project.github_link }}" target="_blank" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            {% endif %}
+                            {% if project.live_demo %}
+                            <a href="{{ project.live_demo }}" target="_blank" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-gray-500 text-center py-8 col-span-full">Add projects in the admin panel</p>
+                {% endfor %}
+            </div>
+        </section>
+        
+        <!-- Experience -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <i class="fas fa-briefcase text-primary"></i> Experience
+            </h2>
+            {% include 'core/experience_section.html' %}
+        </section>
+    </div>
+</main>
+
+<footer class="py-8 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">© 2024 Developer Portfolio. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}

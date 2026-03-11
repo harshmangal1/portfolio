@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - My Portfolio{% endblock %}
+
+{% block content %}
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-xl font-bold gradient-text">{% if profile %}{{ profile.name|first }}{% else %}D{% endif %}</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/about/" class="text-sm font-medium hover:text-primary transition-colors">About</a>
+                <a href="/projects/" class="text-sm font-medium hover:text-primary transition-colors">Projects</a>
+                <a href="/certifications/" class="text-sm font-medium hover:text-primary transition-colors">Certifications</a>
+                <a href="/blog/" class="text-sm font-medium hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-sm font-medium text-primary transition-colors">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden p-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden glass bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="px-4 py-3 space-y-2">
+            <a href="/" class="block py-2 hover:text-primary transition-colors">Home</a>
+            <a href="/about/" class="block py-2 hover:text-primary transition-colors">About</a>
+            <a href="/projects/" class="block py-2 hover:text-primary transition-colors">Projects</a>
+            <a href="/certifications/" class="block py-2 hover:text-primary transition-colors">Certifications</a>
+            <a href="/blog/" class="block py-2 hover:text-primary transition-colors">Blog</a>
+            <a href="/contact/" class="block py-2 hover:text-primary transition-colors">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-16 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Let's connect and work together</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Contact Info -->
+            <div>
+                <div class="glass p-8 rounded-xl mb-6">
+                    <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
+                    <div class="space-y-4">
+                        {% if profile and profile.email %}
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-envelope text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Email</p>
+                                <a href="mailto:{{ profile.email }}" class="font-medium hover:text-primary">{{ profile.email }}</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile and profile.phone %}
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-phone text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Phone</p>
+                                <a href="tel:{{ profile.phone }}" class="font-medium hover:text-primary">{{ profile.phone }}</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile and profile.linkedin %}
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fab fa-linkedin text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">LinkedIn</p>
+                                <a href="{{ profile.linkedin }}" target="_blank" class="font-medium hover:text-primary">LinkedIn Profile</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile and profile.github %}
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fab fa-github text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">GitHub</p>
+                                <a href="{{ profile.github }}" target="_blank" class="font-medium hover:text-primary">GitHub Profile</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4">
+                    {% if profile and profile.email %}
+                    <a href="mailto:{{ profile.email }}" class="flex-1 px-6 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </a>
+                    {% endif %}
+                    {% if profile and profile.phone %}
+                    <a href="tel:{{ profile.phone }}" class="flex-1 px-6 py-4 glass text-primary font-semibold rounded-lg hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="glass p-8 rounded-xl">
+                <h2 class="text-2xl font-bold mb-6">Send a Message</h2>
+                {% if sent %}
+                <div class="bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6">
+                    <i class="fas fa-check-circle mr-2"></i> Message sent successfully!
+                </div>
+                {% endif %}
+                <form method="POST" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Name</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Subject (Optional)</label>
+                        <input type="text" name="subject" class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Message</label>
+                        <textarea name="message" rows="5" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full px-6 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all transform hover:scale-[1.02] shadow-lg shadow-primary/30">
+                        Send Message <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="py-8 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">© 2024 Developer. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>
+{% endblock %}

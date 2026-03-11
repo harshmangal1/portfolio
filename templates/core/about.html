@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}About - {% if profile %}{{ profile.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-xl font-bold gradient-text">{% if profile %}{{ profile.name|first }}{% else %}D{% endif %}</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/about/" class="text-sm font-medium text-primary transition-colors">About</a>
+                <a href="/projects/" class="text-sm font-medium hover:text-primary transition-colors">Projects</a>
+                <a href="/certifications/" class="text-sm font-medium hover:text-primary transition-colors">Certifications</a>
+                <a href="/blog/" class="text-sm font-medium hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden p-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden glass bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="px-4 py-3 space-y-2">
+            <a href="/" class="block py-2 hover:text-primary transition-colors">Home</a>
+            <a href="/about/" class="block py-2 hover:text-primary transition-colors">About</a>
+            <a href="/projects/" class="block py-2 hover:text-primary transition-colors">Projects</a>
+            <a href="/certifications/" class="block py-2 hover:text-primary transition-colors">Certifications</a>
+            <a href="/blog/" class="block py-2 hover:text-primary transition-colors">Blog</a>
+            <a href="/contact/" class="block py-2 hover:text-primary transition-colors">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-16 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4">About <span class="gradient-text">Me</span></h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Get to know me better</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button class="tab-btn px-6 py-3 rounded-lg bg-primary text-white font-medium transition-all" data-tab="about">
+                About Me
+            </button>
+            <button class="tab-btn px-6 py-3 rounded-lg glass hover:bg-primary/10 transition-all" data-tab="education">
+                Education
+            </button>
+            <button class="tab-btn px-6 py-3 rounded-lg glass hover:bg-primary/10 transition-all" data-tab="skills">
+                Technical Skills
+            </button>
+            <button class="tab-btn px-6 py-3 rounded-lg glass hover:bg-primary/10 transition-all" data-tab="learning">
+                Currently Learning
+            </button>
+        </div>
+
+        <!-- About Me Tab -->
+        <div id="tab-about" class="tab-content active">
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div class="glass p-8 rounded-xl">
+                    {% if profile and profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-48 h-48 rounded-full object-cover mx-auto mb-6">
+                    {% else %}
+                    <div class="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-secondary mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-user text-6xl text-white"></i>
+                    </div>
+                    {% endif %}
+                    <h2 class="text-2xl font-bold text-center mb-2">{% if profile %}{{ profile.name }}{% else %}Your Name{% endif %}</h2>
+                    <p class="text-primary text-center mb-4">{% if profile %}{{ profile.title }}{% else %}Developer{% endif %}</p>
+                    <div class="flex justify-center gap-4">
+                        {% if profile and profile.github %}
+                        <a href="{{ profile.github }}" target="_blank" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-primary"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if profile and profile.linkedin %}
+                        <a href="{{ profile.linkedin }}" target="_blank" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-primary"><i class="fab fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if profile and profile.email %}
+                        <a href="mailto:{{ profile.email }}" class="text-2xl text-gray-600 dark:text-gray-400 hover:text-primary"><i class="fas fa-envelope"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    {% if career_objective %}
+                    <div class="glass p-8 rounded-xl mb-6">
+                        <h3 class="text-xl font-bold mb-4">{{ career_objective.title }}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{{ career_objective.content }}</p>
+                    </div>
+                    {% endif %}
+                    {% if profile %}
+                    <div class="glass p-8 rounded-xl">
+                        <h3 class="text-xl font-bold mb-4">More About Me</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{{ profile.bio }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Tab -->
+        <div id="tab-education" class="tab-content">
+            <div class="max-w-4xl mx-auto space-y-6">
+                {% for edu in education %}
+                <div class="glass p-6 rounded-xl">
+                    <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                        <h3 class="text-xl font-semibold">{{ edu.degree }}</h3>
+                        <span class="text-sm text-primary">
+                            {{ edu.start_date|date:"Y" }} - {% if edu.current %}Present{% else %}{{ edu.end_date|date:"Y" }}{% endif %}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-1">{{ edu.institution }}</p>
+                    {% if edu.field_of_study %}
+                    <p class="text-gray-500 text-sm">{{ edu.field_of_study }}</p>
+                    {% endif %}
+                    {% if edu.description %}
+                    <p class="text-gray-500 text-sm mt-2">{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <div class="text-center py-12">
+                    <i class="fas fa-graduation-cap text-6xl text-gray-300 dark:text-gray-700 mb-4"></i>
+                    <p class="text-gray-500">Add education in the admin panel</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Technical Skills Tab -->
+        <div id="tab-skills" class="tab-content">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for category, category_skills in skills_by_category.items %}
+                <div class="glass p-6 rounded-xl">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="{{ category.icon }} text-2xl text-primary"></i>
+                        <h3 class="text-lg font-semibold">{{ category.name }}</h3>
+                    </div>
+                    <div class="space-y-4">
+                        {% for skill in category_skills %}
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>{{ skill.name }}</span>
+                                <span class="text-gray-500">{{ skill.proficiency_level }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: {{ skill.proficiency_level }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-code text-6xl text-gray-300 dark:text-gray-700 mb-4"></i>
+                    <p class="text-gray-500">Add skills in the admin panel</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Currently Learning Tab -->
+        <div id="tab-learning" class="tab-content">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for learning in currently_learning %}
+                <div class="glass p-6 rounded-xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="{{ learning.icon }} text-3xl text-primary"></i>
+                        <h3 class="text-lg font-semibold">{{ learning.name }}</h3>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+                        <div class="bg-gradient-to-r from-primary to-accent h-2 rounded-full" style="width: {{ learning.progress }}%"></div>
+                    </div>
+                    <p class="text-sm text-gray-500">{{ learning.progress }}% Complete</p>
+                </div>
+                {% empty %}
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-book-reader text-6xl text-gray-300 dark:text-gray-700 mb-4"></i>
+                    <p class="text-gray-500">Add learning items in the admin panel</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="py-8 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">© 2024 {% if profile %}{{ profile.name }}{% else %}Developer{% endif %}. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.dataset.tab;
+            
+            tabBtns.forEach(b => {
+                b.classList.remove('bg-primary', 'text-white');
+                b.classList.add('glass', 'hover:bg-primary/10');
+            });
+            btn.classList.remove('glass', 'hover:bg-primary/10');
+            btn.classList.add('bg-primary', 'text-white');
+            
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+        });
+    });
+</script>
+{% endblock %}

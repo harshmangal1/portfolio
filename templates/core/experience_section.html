@@ -1,0 +1,65 @@
+<div class="space-y-8">
+    {% if experiences %}
+    <div class="mb-12">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+            <i class="fas fa-briefcase text-primary"></i> Work Experience
+        </h3>
+        <div class="space-y-6">
+            {% for exp in experiences %}
+            <div class="relative pl-8 border-l-2 border-primary/30">
+                <div class="absolute -left-2 top-0 w-4 h-4 bg-primary rounded-full"></div>
+                <div class="glass p-6 rounded-lg">
+                    <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                        <h4 class="text-lg font-semibold">{{ exp.position }}</h4>
+                        <span class="text-sm text-primary">
+                            {{ exp.start_date|date:"M Y" }} - {% if exp.current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">{{ exp.company }}</p>
+                    {% if exp.description %}
+                    <p class="text-gray-500 dark:text-gray-500 text-sm">{{ exp.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if education %}
+    <div>
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+            <i class="fas fa-graduation-cap text-secondary"></i> Education
+        </h3>
+        <div class="space-y-6">
+            {% for edu in education %}
+            <div class="relative pl-8 border-l-2 border-secondary/30">
+                <div class="absolute -left-2 top-0 w-4 h-4 bg-secondary rounded-full"></div>
+                <div class="glass p-6 rounded-lg">
+                    <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                        <h4 class="text-lg font-semibold">{{ edu.degree }}</h4>
+                        <span class="text-sm text-secondary">
+                            {{ edu.start_date|date:"M Y" }} - {% if edu.current %}Present{% else %}{{ edu.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-1">{{ edu.institution }}</p>
+                    {% if edu.field_of_study %}
+                    <p class="text-gray-500 dark:text-gray-500 text-sm">{{ edu.field_of_study }}</p>
+                    {% endif %}
+                    {% if edu.description %}
+                    <p class="text-gray-500 dark:text-gray-500 text-sm mt-2">{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if not experiences and not education %}
+    <div class="text-center py-12">
+        <i class="fas fa-history text-6xl text-gray-300 dark:text-gray-700 mb-4"></i>
+        <p class="text-gray-500">Add your experience and education in the admin panel</p>
+    </div>
+    {% endif %}
+</div>

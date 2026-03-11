@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - DevPortfolio{% endblock %}
+
+{% block content %}
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-xl font-bold gradient-text">DevPortfolio</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="{% url 'blog_index' %}" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/#contact" class="hover:text-primary transition-colors">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-16">
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <a href="{% url 'blog_index' %}" class="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all mb-8">
+            <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+        
+        {% if post.cover_image %}
+        <div class="mb-8 rounded-xl overflow-hidden">
+            <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-64 md:h-96 object-cover">
+        </div>
+        {% endif %}
+        
+        <header class="mb-8">
+            <p class="text-primary mb-2">{{ post.created_at|date:"F d, Y" }}</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ post.title }}</h1>
+            {% if post.excerpt %}
+            <p class="text-xl text-gray-600 dark:text-gray-400">{{ post.excerpt }}</p>
+            {% endif %}
+        </header>
+        
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            {{ post.content|linebreaks }}
+        </div>
+        
+        <hr class="my-12 border-gray-200 dark:border-gray-700">
+        
+        {% if recent_posts %}
+        <section>
+            <h3 class="text-2xl font-bold mb-6">Recent Posts</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                {% for recent in recent_posts %}
+                <article class="glass rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                    {% if recent.cover_image %}
+                    <div class="h-32 overflow-hidden">
+                        <img src="{{ recent.cover_image.url }}" alt="{{ recent.title }}" class="w-full h-full object-cover">
+                    </div>
+                    {% endif %}
+                    <div class="p-4">
+                        <p class="text-xs text-primary mb-1">{{ recent.created_at|date:"M d, Y" }}</p>
+                        <h4 class="font-semibold line-clamp-2 hover:text-primary transition-colors">
+                            <a href="{% url 'blog_detail' recent.slug %}">{{ recent.title }}</a>
+                        </h4>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </article>
+</main>
+
+<footer class="py-8 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">© 2024 Developer Portfolio. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Projects - My Portfolio{% endblock %}
+
+{% block content %}
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-xl font-bold gradient-text">{% if profile %}{{ profile.name|first }}{% else %}D{% endif %}</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/about/" class="text-sm font-medium hover:text-primary transition-colors">About</a>
+                <a href="/projects/" class="text-sm font-medium text-primary transition-colors">Projects</a>
+                <a href="/certifications/" class="text-sm font-medium hover:text-primary transition-colors">Certifications</a>
+                <a href="/blog/" class="text-sm font-medium hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden p-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden glass bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="px-4 py-3 space-y-2">
+            <a href="/" class="block py-2 hover:text-primary transition-colors">Home</a>
+            <a href="/about/" class="block py-2 hover:text-primary transition-colors">About</a>
+            <a href="/projects/" class="block py-2 hover:text-primary transition-colors">Projects</a>
+            <a href="/certifications/" class="block py-2 hover:text-primary transition-colors">Certifications</a>
+            <a href="/blog/" class="block py-2 hover:text-primary transition-colors">Blog</a>
+            <a href="/contact/" class="block py-2 hover:text-primary transition-colors">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-16 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4">My <span class="gradient-text">Projects</span></h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Explore my work</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <a href="?category=all" class="filter-btn px-6 py-2 rounded-full {% if current_category == 'all' %}bg-primary text-white{% else %}glass hover:bg-primary/10{% endif %} transition-all">
+                All
+            </a>
+            <a href="?category=web" class="filter-btn px-6 py-2 rounded-full {% if current_category == 'web' %}bg-primary text-white{% else %}glass hover:bg-primary/10{% endif %} transition-all">
+                Web Development
+            </a>
+            <a href="?category=ai" class="filter-btn px-6 py-2 rounded-full {% if current_category == 'ai' %}bg-primary text-white{% else %}glass hover:bg-primary/10{% endif %} transition-all">
+                AI / ML
+            </a>
+            <a href="?category=data" class="filter-btn px-6 py-2 rounded-full {% if current_category == 'data' %}bg-primary text-white{% else %}glass hover:bg-primary/10{% endif %} transition-all">
+                Data Analytics
+            </a>
+            <a href="?category=other" class="filter-btn px-6 py-2 rounded-full {% if current_category == 'other' %}bg-primary text-white{% else %}glass hover:bg-primary/10{% endif %} transition-all">
+                Other
+            </a>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+            {% for project in projects %}
+            <div class="project-card glass rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300 group" data-category="{{ project.category }}">
+                {% if project.image %}
+                <div class="h-48 overflow-hidden">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                {% else %}
+                <div class="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                    <i class="fas fa-project-diagram text-6xl text-gray-400"></i>
+                </div>
+                {% endif %}
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
+                            {% if project.category == 'web' %}Web Development
+                            {% elif project.category == 'ai' %}AI / ML
+                            {% elif project.category == 'data' %}Data Analytics
+                            {% else %}Other{% endif %}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{{ project.short_description }}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.tech_stack|split:"," %}
+                        <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs rounded-full">{{ tech.strip }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="flex gap-4">
+                        {% if project.github_link %}
+                        <a href="{{ project.github_link }}" target="_blank" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                        {% endif %}
+                        {% if project.live_demo %}
+                        <a href="{{ project.live_demo }}" target="_blank" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-folder-open text-6xl text-gray-300 dark:text-gray-700 mb-4"></i>
+                <p class="text-gray-500">No projects found. Add projects in the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+<footer class="py-8 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">© 2024 Developer. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>
+{% endblock %}
