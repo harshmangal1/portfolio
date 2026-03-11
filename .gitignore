@@ -22,7 +22,7 @@ db.sqlite3-journal
 /media/*
 !/media/profile/
 /media/profile/*
-!/media/profile/IMG_20240908_133208_optimized_501.jpg
+!/media/profile/profile_image.jpg
 
 # IDE
 .vscode/
