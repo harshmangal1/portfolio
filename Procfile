@@ -1,2 +1,2 @@
-release: python manage.py migrate --noinput; python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.get_or_create(username='admin2', defaults={'email': 'admin2@example.com', 'is_staff': True, 'is_superuser': True}); u = User.objects.filter(username='admin2').first(); u.set_password('admin123456'); u.save()"
+release: python manage.py migrate --noinput
 web: gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
