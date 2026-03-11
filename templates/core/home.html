@@ -97,8 +97,6 @@
                             <div class="w-full h-full rounded-full bg-gray-900 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
                                 {% if profile and profile.profile_image %}
                                 <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-full h-full object-cover">
-                                {% elif profile %}
-                                <img src="{% static 'images/profile.jpg' %}" alt="{{ profile.name }}" class="w-full h-full object-cover">
                                 {% else %}
                                 <i class="fas fa-user text-8xl text-gray-600"></i>
                                 {% endif %}
