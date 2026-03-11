@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 
-{% block meta_description %}{{ profile.meta_description|default:profile.bio|truncatewords:20 }}{% endblock %}
-{% block meta_author %}{{ profile.name }}{% endblock %}
-{% block og_title %}{{ profile.name }} - {{ profile.title }}{% endblock %}
-{% block og_description %}{{ profile.bio|truncatewords:20 }}{% endblock %}
+{% block meta_description %}{% if profile %}{{ profile.meta_description|default:profile.bio|truncatewords:20 }}{% endif %}{% endblock %}
+{% block meta_author %}{% if profile %}{{ profile.name }}{% endif %}{% endblock %}
+{% block og_title %}{% if profile %}{{ profile.name }} - {{ profile.title }}{% endif %}{% endblock %}
+{% block og_description %}{% if profile %}{{ profile.bio|truncatewords:20 }}{% endif %}{% endblock %}
 
 {% block content %}
 <nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
