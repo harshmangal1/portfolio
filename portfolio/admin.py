@@ -36,7 +36,6 @@ class CertificationAdmin(admin.ModelAdmin):
     list_display = ('name', 'organization', 'issued_date', 'order')
     search_fields = ('name', 'organization')
     list_editable = ('order',)
-    readonly_fields = ('issued_date',)
 
 
 @admin.register(Experience)
