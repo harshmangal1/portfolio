@@ -97,6 +97,14 @@ def certifications(request):
     })
 
 
+def certification_detail(request, credential_id):
+    cert = Certification.objects.filter(credential_id=credential_id).first()
+    if not cert:
+        from django.shortcuts import get_object_or_404
+        get_object_or_404(Certification, credential_id=credential_id)
+    return render(request, 'core/certification_detail.html', {'cert': cert})
+
+
 def blog_index(request):
     posts = BlogPost.objects.filter(published=True).order_by('-created_at')
     return render(request, 'blog/index.html', {'posts': posts})
