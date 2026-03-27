@@ -35,9 +35,24 @@ class CurrentlyLearningAdmin(admin.ModelAdmin):
 class ProjectAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ('title', 'order', 'category', 'featured', 'created_at')
     list_filter = ('featured', 'category')
-    search_fields = ('title', 'tech_stack')
+    search_fields = ('title', 'tech_stack', 'problem_statement', 'solution', 'outcome')
     readonly_fields = ('created_at',)
     list_editable = ('order', 'featured', 'category')
+    fieldsets = (
+        ('Basic Info', {
+            'fields': ('title', 'short_description', 'description', 'category', 'featured', 'order', 'image')
+        }),
+        ('Project Details', {
+            'fields': ('problem_statement', 'solution', 'outcome', 'tech_stack')
+        }),
+        ('Links', {
+            'fields': ('github_link', 'live_demo')
+        }),
+        ('Metadata', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )
 
 
 @admin.register(Certification)

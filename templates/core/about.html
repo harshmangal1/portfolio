@@ -152,7 +152,11 @@
                         <div class="skill-item group relative" data-skill-level="{{ skill.proficiency_level }}">
                             <div class="flex justify-between items-center mb-2">
                                 <div class="flex items-center gap-3">
+                                    {% if skill.icon|slice:":3" == "fa-" or skill.icon|slice:":4" == "fab-" or skill.icon|slice:":4" == "fas-" %}
+                                    <i class="{{ skill.icon }} text-lg text-primary"></i>
+                                    {% else %}
                                     <span class="text-lg">{{ skill.icon }}</span>
+                                    {% endif %}
                                     <span class="font-semibold text-gray-800 dark:text-gray-200">{{ skill.name }}</span>
                                 </div>
                                 <span class="text-sm font-bold text-primary">{{ skill.proficiency_level }}%</span>
