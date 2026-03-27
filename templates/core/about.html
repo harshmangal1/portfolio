@@ -132,22 +132,34 @@
 
         <!-- Technical Skills Tab -->
         <div id="tab-skills" class="tab-content">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="text-center mb-8">
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">I specialize in analyzing data and building interactive dashboards to extract meaningful insights.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {% for category, category_skills in skills_by_category.items %}
-                <div class="glass p-6 rounded-xl">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="{{ category.icon }} text-2xl text-primary"></i>
-                        <h3 class="text-lg font-semibold">{{ category.name }}</h3>
+                <div class="glass p-8 rounded-2xl hover:shadow-xl hover:shadow-primary/10 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+                            <i class="{{ category.icon }} text-xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ category.name }}</h3>
                     </div>
-                    <div class="space-y-4">
+                    <div class="space-y-6">
                         {% for skill in category_skills %}
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span>{{ skill.name }}</span>
-                                <span class="text-gray-500">{{ skill.proficiency_level }}%</span>
+                        <div class="skill-item group relative" data-skill-level="{{ skill.proficiency_level }}">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-lg">{{ skill.icon }}</span>
+                                    <span class="font-semibold text-gray-800 dark:text-gray-200">{{ skill.name }}</span>
+                                </div>
+                                <span class="text-sm font-bold text-primary">{{ skill.proficiency_level }}%</span>
                             </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: {{ skill.proficiency_level }}%"></div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                                <div class="about-skill-bar bg-gradient-to-r from-primary via-secondary to-accent h-full rounded-full" data-width="{{ skill.proficiency_level }}"></div>
+                            </div>
+                            <div class="absolute left-0 -bottom-14 w-64 bg-gray-900 dark:bg-gray-800 text-white text-sm px-3 py-2 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 shadow-xl">
+                                {% if skill.usage_description %}{{ skill.usage_description }}{% else %}{{ skill.name }} - Used in various projects for {{ category.name|lower }} development{% endif %}
+                                <div class="absolute -top-2 left-4 w-4 h-4 bg-gray-900 dark:bg-gray-800 transform rotate-45"></div>
                             </div>
                         </div>
                         {% endfor %}
@@ -217,7 +229,27 @@
                 content.classList.remove('active');
             });
             document.getElementById('tab-' + tabId).classList.add('active');
+
+            // Trigger skill bar animation when skills tab is shown
+            if (tabId === 'skills') {
+                animateAboutSkillBars();
+            }
         });
     });
+
+    // About page skill bar animation
+    function animateAboutSkillBars() {
+        const skillBars = document.querySelectorAll('.about-skill-bar');
+        skillBars.forEach(bar => {
+            if (bar.style.width === '0%' || bar.style.width === '') {
+                const width = bar.dataset.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+                    bar.style.width = width + '%';
+                }, 100);
+            }
+        });
+    }
 </script>
 {% endblock %}

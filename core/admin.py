@@ -48,3 +48,7 @@ class StatAdmin(admin.ModelAdmin):
 
 admin.site.unregister(Group)
 admin.site.unregister(User)
+
+admin.site.site_header = 'Portfolio Admin'
+admin.site.site_title = 'Portfolio Admin Portal'
+admin.site.index_title = 'Welcome to Portfolio Administration'

@@ -7,6 +7,7 @@
     <meta name="description" content="{% block meta_description %}Developer Portfolio - Python Django Developer{% endblock %}">
     <meta name="keywords" content="portfolio, django, python, developer, web development">
     <meta name="author" content="{% block meta_author %}Developer{% endblock %}">
+    <meta name="robots" content="index, follow">
     
     <meta property="og:title" content="{% block og_title %}Developer Portfolio{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Developer Portfolio - Python Django Developer{% endblock %}">
@@ -62,16 +63,19 @@
             background-clip: text;
         }
         .glass {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .dark .glass {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(17, 24, 39, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .skill-bar {
-            transition: width 1s ease-out;
+        .skill-progress-bar {
+            width: 0%;
+        }
+        .skill-item {
+            padding-bottom: 3rem;
         }
         .tab-content {
             display: none;
@@ -79,6 +83,10 @@
         .tab-content.active {
             display: block;
             animation: fadeIn 0.3s ease-out;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
     {% block extra_head %}{% endblock %}

@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en-us' }}" {{ direction }}>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/login.css' %}">
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+</head>
+<body class="{% if is_popup %}popup {% endif %}login" data-admin-legacy-select2="false" data-admin-url="{% url 'admin:index' %}">
+    {% block body %}
+    <div id="container">
+        {% block content %}
+        {{ content }}
+        {% endblock %}
+    </div>
+    {% endblock %}
+    {% block footer %}{% endblock %}
+</body>
+</html>

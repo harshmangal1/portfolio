@@ -12,8 +12,16 @@ class SkillCategoryAdmin(admin.ModelAdmin):
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'proficiency_level', 'order')
     list_filter = ('category',)
-    search_fields = ('name',)
+    search_fields = ('name', 'usage_description')
     list_editable = ('proficiency_level', 'order')
+    fieldsets = (
+        ('Basic Info', {
+            'fields': ('name', 'icon', 'category', 'order')
+        }),
+        ('Proficiency', {
+            'fields': ('proficiency_level', 'usage_description')
+        }),
+    )
 
 
 @admin.register(CurrentlyLearning)

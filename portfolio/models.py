@@ -21,6 +21,7 @@ class Skill(models.Model):
     proficiency_level = models.IntegerField(default=50, help_text='1-100')
     category = models.ForeignKey(SkillCategory, on_delete=models.CASCADE, related_name='skills')
     order = models.IntegerField(default=0)
+    usage_description = models.CharField(max_length=200, blank=True, default="", help_text='Short description for tooltip on hover')
 
     class Meta:
         ordering = ['order', '-proficiency_level']

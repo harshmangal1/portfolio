@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-change-in-production')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['.render.com', 'localhost', '127.0.0.1', 'testserver', 'harsh-portfolio-53bw.onrender.com']
 
@@ -49,6 +49,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                'core.context_processors.media_url.media_url',
             ],
         },
     },
@@ -74,22 +76,51 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Login URL Configuration
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '/admin/login/'
+
+# Session Security Configuration
+SESSION_COOKIE_AGE = 1800  # 30 minutes
+SESSION_COOKIE_SECURE = not DEBUG  # Only send cookie over HTTPS in production
+SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript access
+SESSION_COOKIE_SAMESITE = 'Lax'  # CSRF protection
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Keep session based on timeout
+SESSION_SAVE_EVERY_REQUEST = True  # Refresh session on every request
+
+# CSRF Settings
+CSRF_COOKIE_SECURE = not DEBUG  # Only send over HTTPS in production
+CSRF_USE_SAMESITE_COOKIES = True
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# Static Files Configuration
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'static'] if DEBUG else []
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media Files Configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Cloudinary Configuration (Optional - for production media storage)
+# Uncomment and install cloudinary if you want to use cloud storage
+# CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', '')
+# CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', '')
+# CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', '')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 X_FRAME_OPTIONS = 'DENY'
 
-# Serve media files with WhiteNoise
-MEDIAFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Cache Control - No caching for admin to ensure fresh content
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
