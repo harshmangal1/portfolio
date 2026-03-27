@@ -22,6 +22,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
+    'two_factor',
     'core',
     'portfolio',
     'blog',
@@ -42,6 +46,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Two-Factor Authentication
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+ADMIN_LOGIN_URL = '/accounts/login/'
+
+# Two-Factor Settings
+TWO_FACTOR_FORCE_ADMIN_ALL_USERS = True
+TWO_FACTOR_QR_FORMAT = 'png'
+TWO_FACTOR_EMAIL_BRANDING = {
+    'logo_url': '',
+    'company_name': 'Harsh Portfolio',
+}
 
 ROOT_URLCONF = 'portfolio_site.urls'
 
@@ -149,3 +167,7 @@ if USE_CLOUDINARY:
     CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     CLOUDINARY_HOST = f'https://api.cloudinary.com/v1_1/{CLOUDINARY_CLOUD_NAME}'
+
+# reCAPTCHA Configuration
+RECAPTCHA_SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY', '')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY', '')

@@ -7,3 +7,6 @@ requests
 psycopg2-binary
 cloudinary
 django-cloudinary-storage
+django-two-factor-auth
+qrcode
+phonenumbers

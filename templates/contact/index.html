@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}Contact - My Portfolio{% endblock %}
+{% block title %}Contact - Harsh | Data Analytics Portfolio{% endblock %}
+{% block meta_description %}Get in touch with Harsh for data analytics projects, dashboard development, or collaboration opportunities.{% endblock %}
+
+{% block extra_head %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
 
 {% block content %}
 <nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            <a href="/" class="text-xl font-bold gradient-text">Harsh's Portfolio</a>
+            <a href="/" class="text-xl font-bold gradient-text flex items-center gap-2">
+                <i class="fas fa-chart-line"></i>
+                <span class="hidden sm:inline">Harsh's Portfolio</span>
+            </a>
             <div class="hidden md:flex items-center space-x-6">
                 <a href="/" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
                 <a href="/about/" class="text-sm font-medium hover:text-primary transition-colors">About</a>
@@ -38,128 +46,167 @@
 
 <main class="pt-24 pb-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
+        <div class="text-center mb-12" data-aos="fade-up">
             <h1 class="text-5xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h1>
-            <p class="text-xl text-gray-600 dark:text-gray-400">Let's connect and work together</p>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Have a project in mind? Let's collaborate and create something amazing together.</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-12">
+        <div class="grid lg:grid-cols-5 gap-12">
             <!-- Contact Info -->
-            <div>
-                <div class="glass p-8 rounded-xl mb-6">
+            <div class="lg:col-span-2">
+                <div class="glass p-8 rounded-2xl mb-6" data-aos="fade-right">
                     <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
-                    <div class="space-y-4">
+                    <div class="space-y-6">
                         {% if profile and profile.email %}
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-envelope text-primary"></i>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fas fa-envelope text-white text-xl"></i>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Email</p>
-                                <a href="mailto:{{ profile.email }}" class="font-medium hover:text-primary">{{ profile.email }}</a>
+                                <a href="mailto:{{ profile.email }}" class="font-semibold hover:text-primary transition-colors">{{ profile.email }}</a>
                             </div>
                         </div>
                         {% endif %}
                         
                         {% if profile and profile.phone %}
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-phone text-primary"></i>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fas fa-phone text-white text-xl"></i>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Phone</p>
-                                <a href="tel:{{ profile.phone }}" class="font-medium hover:text-primary">{{ profile.phone }}</a>
+                                <a href="tel:{{ profile.phone }}" class="font-semibold hover:text-primary transition-colors">{{ profile.phone }}</a>
                             </div>
                         </div>
                         {% endif %}
                         
                         {% if profile and profile.linkedin %}
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <i class="fab fa-linkedin text-primary"></i>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fab fa-linkedin text-white text-xl"></i>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">LinkedIn</p>
-                                <a href="{{ profile.linkedin }}" target="_blank" class="font-medium hover:text-primary">LinkedIn Profile</a>
+                                <a href="{{ profile.linkedin }}" target="_blank" class="font-semibold hover:text-primary transition-colors">Connect on LinkedIn</a>
                             </div>
                         </div>
                         {% endif %}
                         
                         {% if profile and profile.github %}
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <i class="fab fa-github text-primary"></i>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fab fa-github text-white text-xl"></i>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">GitHub</p>
-                                <a href="{{ profile.github }}" target="_blank" class="font-medium hover:text-primary">GitHub Profile</a>
+                                <a href="{{ profile.github }}" target="_blank" class="font-semibold hover:text-primary transition-colors">View GitHub Profile</a>
                             </div>
                         </div>
                         {% endif %}
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap gap-4">
-                    {% if profile and profile.email %}
-                    <a href="mailto:{{ profile.email }}" class="flex-1 px-6 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
-                        <i class="fas fa-envelope"></i> Send Email
-                    </a>
-                    {% endif %}
-                    {% if profile and profile.phone %}
-                    <a href="tel:{{ profile.phone }}" class="flex-1 px-6 py-4 glass text-primary font-semibold rounded-lg hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
-                        <i class="fas fa-phone"></i> Call Now
-                    </a>
-                    {% endif %}
+                <div class="glass p-8 rounded-2xl" data-aos="fade-right" data-aos-delay="100">
+                    <h3 class="text-lg font-bold mb-4">Quick Response</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">I typically respond within 24 hours. For urgent matters, please mention it in your message.</p>
+                    <div class="flex gap-4">
+                        {% if profile and profile.email %}
+                        <a href="mailto:{{ profile.email }}" class="flex-1 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                        {% endif %}
+                        {% if profile and profile.phone %}
+                        <a href="tel:{{ profile.phone }}" class="flex-1 px-6 py-3 glass text-primary font-semibold rounded-lg hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-phone"></i> Call
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
             <!-- Contact Form -->
-            <div class="glass p-8 rounded-xl">
-                <h2 class="text-2xl font-bold mb-6">Send a Message</h2>
-                {% if sent %}
-                <div class="bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6">
-                    <i class="fas fa-check-circle mr-2"></i> Message sent successfully!
+            <div class="lg:col-span-3" data-aos="fade-left" data-aos-delay="200">
+                <div class="glass p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold mb-6">Send a Message</h2>
+                    {% if sent %}
+                    <div class="bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+                        <i class="fas fa-check-circle text-xl"></i>
+                        <span class="font-semibold">Message sent successfully! I'll get back to you soon.</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if form.errors %}
+                    <div class="bg-red-100 dark:bg-red-900/30 border border-red-500 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        Please fix the errors below.
+                    </div>
+                    {% endif %}
+                    
+                    <form method="POST" action="{% url 'contact' %}" id="contact-form" class="space-y-6">
+                        {% csrf_token %}
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Name <span class="text-red-500">*</span></label>
+                                <input type="text" name="name" required placeholder="Your name" class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" required placeholder="your.email@example.com" class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Subject</label>
+                            <input type="text" name="subject" placeholder="What's this about?" class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Message <span class="text-red-500">*</span></label>
+                            <textarea name="message" rows="5" required placeholder="Tell me about your project, idea, or just say hello..." class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"></textarea>
+                        </div>
+                        
+                        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                        
+                        <button type="submit" id="submit-btn" class="w-full px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
-                {% endif %}
-                <form method="POST" action="{% url 'contact' %}">
-                    {% csrf_token %}
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Name</label>
-                            <input type="text" name="name" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Email</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2">Subject (Optional)</label>
-                        <input type="text" name="subject" class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all">
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2">Message</label>
-                        <textarea name="message" rows="5" required class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"></textarea>
-                    </div>
-                    <button type="submit" class="w-full px-6 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all transform hover:scale-[1.02] shadow-lg shadow-primary/30">
-                        Send Message <i class="fas fa-paper-plane ml-2"></i>
-                    </button>
-                </form>
             </div>
         </div>
     </div>
 </main>
 
 <footer class="py-8 bg-gray-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-        <p class="text-gray-400">© 2024 Developer. All rights reserved.</p>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <p class="font-bold gradient-text text-lg">Harsh's Portfolio</p>
+                <p class="text-gray-400 text-sm">Data Analytics & Dashboard Specialist</p>
+            </div>
+            <div class="flex gap-6 items-center">
+                <a href="/" class="text-gray-400 hover:text-primary transition-colors">Home</a>
+                <a href="/about/" class="text-gray-400 hover:text-primary transition-colors">About</a>
+                <a href="/projects/" class="text-gray-400 hover:text-primary transition-colors">Projects</a>
+                <a href="/contact/" class="text-gray-400 hover:text-primary transition-colors">Contact</a>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+            © 2024 {% if profile %}{{ profile.name }}{% else %}Harsh{% endif %}. All rights reserved.
+        </div>
     </div>
 </footer>
 
 <script>
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
         document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Form submission with loading state
+    document.getElementById('contact-form').addEventListener('submit', function() {
+        const btn = document.getElementById('submit-btn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+        btn.disabled = true;
     });
 </script>
 {% endblock %}
