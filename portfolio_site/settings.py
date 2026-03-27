@@ -90,14 +90,14 @@ LOGOUT_REDIRECT_URL = '/admin/login/'
 
 # Session Security Configuration
 SESSION_COOKIE_AGE = 1800  # 30 minutes
-SESSION_COOKIE_SECURE = not DEBUG  # Only send cookie over HTTPS in production
+SESSION_COOKIE_SECURE = True  # Always secure
 SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript access
 SESSION_COOKIE_SAMESITE = 'Lax'  # CSRF protection
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Keep session based on timeout
 SESSION_SAVE_EVERY_REQUEST = True  # Refresh session on every request
 
 # CSRF Settings
-CSRF_COOKIE_SECURE = not DEBUG  # Only send over HTTPS in production
+CSRF_COOKIE_SECURE = True  # Always secure
 CSRF_USE_SAMESITE_COOKIES = True
 
 LANGUAGE_CODE = 'en-us'
