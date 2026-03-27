@@ -12,6 +12,9 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['.render.com', 'localhost', '127.0.0.1', 'testserver', 'harsh-portfolio-53bw.onrender.com']
 
+# Check if Cloudinary is configured
+USE_CLOUDINARY = bool(os.getenv('CLOUDINARY_API_KEY') and os.getenv('CLOUDINARY_API_SECRET') and os.getenv('CLOUDINARY_CLOUD_NAME'))
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,13 +22,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary',
-    'cloudinary_storage',
     'core',
     'portfolio',
     'blog',
     'contact',
 ]
+
+# Add Cloudinary apps only if configured
+if USE_CLOUDINARY:
+    INSTALLED_APPS.extend(['cloudinary', 'cloudinary_storage'])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,12 +132,10 @@ CACHES = {
     }
 }
 
-# Cloudinary Configuration
-CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', '')
-CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', '')
-CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', '')
-
-# Use Cloudinary for media storage if configured
-if CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET and CLOUDINARY_CLOUD_NAME:
+# Cloudinary Configuration (only if credentials are set)
+if USE_CLOUDINARY:
+    CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
+    CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
+    CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     CLOUDINARY_HOST = f'https://api.cloudinary.com/v1_1/{CLOUDINARY_CLOUD_NAME}'
