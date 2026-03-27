@@ -45,4 +45,6 @@ def contact(request):
         messages.success(request, 'Message sent successfully!')
         return redirect('contact')
     
-    return render(request, 'contact/index.html')
+    return render(request, 'contact/index.html', {
+        'RECAPTCHA_SITE_KEY': settings.RECAPTCHA_SITE_KEY
+    })

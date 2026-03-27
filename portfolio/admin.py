@@ -1,4 +1,5 @@
 from django.contrib import admin
+from adminsortable2.admin import SortableAdminMixin
 from .models import SkillCategory, Skill, CurrentlyLearning, Project, Certification, Experience, Education
 
 
@@ -31,12 +32,12 @@ class CurrentlyLearningAdmin(admin.ModelAdmin):
 
 
 @admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'featured', 'created_at')
+class ProjectAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ('title', 'order', 'category', 'featured', 'created_at')
     list_filter = ('featured', 'category')
     search_fields = ('title', 'tech_stack')
     readonly_fields = ('created_at',)
-    list_editable = ('featured', 'category')
+    list_editable = ('order', 'featured', 'category')
 
 
 @admin.register(Certification)

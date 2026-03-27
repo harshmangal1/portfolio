@@ -164,7 +164,9 @@
                             <textarea name="message" rows="5" required placeholder="Tell me about your project, idea, or just say hello..." class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"></textarea>
                         </div>
                         
-                        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                        {% if RECAPTCHA_SITE_KEY %}
+                        <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+                        {% endif %}
                         
                         <button type="submit" id="submit-btn" class="w-full px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
                             <span>Send Message</span>

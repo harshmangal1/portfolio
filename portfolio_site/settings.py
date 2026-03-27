@@ -12,9 +12,6 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['.render.com', 'localhost', '127.0.0.1', 'testserver', 'harsh-portfolio-53bw.onrender.com']
 
-# Check if Cloudinary is configured
-USE_CLOUDINARY = bool(os.getenv('CLOUDINARY_API_KEY') and os.getenv('CLOUDINARY_API_SECRET') and os.getenv('CLOUDINARY_CLOUD_NAME'))
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,19 +19,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_otp',
-    'django_otp.plugins.otp_totp',
-    'django_otp.plugins.otp_static',
-    'two_factor',
     'core',
     'portfolio',
     'blog',
     'contact',
+    'adminsortable2',
+    'auditlog',
+    'cloudinary',
+    'cloudinary_storage',
 ]
-
-# Add Cloudinary apps only if configured
-if USE_CLOUDINARY:
-    INSTALLED_APPS.extend(['cloudinary', 'cloudinary_storage'])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,19 +40,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Two-Factor Authentication
-LOGIN_URL = '/accounts/login/'
+# Login Configuration
+LOGIN_URL = '/admin/login/'
 LOGIN_REDIRECT_URL = '/admin/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
-ADMIN_LOGIN_URL = '/accounts/login/'
-
-# Two-Factor Settings
-TWO_FACTOR_FORCE_ADMIN_ALL_USERS = True
-TWO_FACTOR_QR_FORMAT = 'png'
-TWO_FACTOR_EMAIL_BRANDING = {
-    'logo_url': '',
-    'company_name': 'Harsh Portfolio',
-}
+LOGOUT_REDIRECT_URL = '/admin/login/'
 
 ROOT_URLCONF = 'portfolio_site.urls'
 
@@ -75,7 +59,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'core.context_processors.media_url.media_url',
+                'core.context_processors.media_url',
+                'core.context_processors.google_analytics',
             ],
         },
     },
@@ -117,11 +102,11 @@ LOGIN_REDIRECT_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/admin/login/'
 
 # Session Security Configuration
-SESSION_COOKIE_AGE = 1800  # 30 minutes
+SESSION_COOKIE_AGE = 900  # 15 minutes
 SESSION_COOKIE_SECURE = True  # Always secure
 SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript access
 SESSION_COOKIE_SAMESITE = 'Lax'  # CSRF protection
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Keep session based on timeout
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Logout when browser closes
 SESSION_SAVE_EVERY_REQUEST = True  # Refresh session on every request
 
 # CSRF Settings
@@ -143,11 +128,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Cloudinary Configuration (Optional - for production media storage)
-# Uncomment and install cloudinary if you want to use cloud storage
-# CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', '')
-# CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', '')
-# CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', '')
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME = 'dgggmgzas'
+CLOUDINARY_API_KEY = '467741997849787'
+CLOUDINARY_API_SECRET = 'wN7oPL0_W5uzP9jIR1aqtvX18UI'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -160,14 +144,13 @@ CACHES = {
     }
 }
 
-# Cloudinary Configuration (only if credentials are set)
-if USE_CLOUDINARY:
-    CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
-    CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
-    CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    CLOUDINARY_HOST = f'https://api.cloudinary.com/v1_1/{CLOUDINARY_CLOUD_NAME}'
+# Cloudinary Configuration (enabled)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_HOST = f'https://api.cloudinary.com/v1_1/{CLOUDINARY_CLOUD_NAME}'
 
 # reCAPTCHA Configuration
 RECAPTCHA_SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY', '')
 RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY', '')
+
+# Google Analytics
+GOOGLE_ANALYTICS_ID = os.getenv('GOOGLE_ANALYTICS_ID', '')

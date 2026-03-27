@@ -1,4 +1,6 @@
 django
+django-admin-sortable2
+django-auditlog
 gunicorn
 whitenoise
 pillow
