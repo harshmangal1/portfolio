@@ -7,7 +7,6 @@ from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('two_factor.urls', 'two_factor')),
     path('', include('core.urls')),
 ]
 
