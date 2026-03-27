@@ -1,40 +1,60 @@
 {% extends 'base.html' %}
 
-{% block title %}Blog - DevPortfolio{% endblock %}
+{% block title %}Blog - Harsh | Data Analytics Portfolio{% endblock %}
+{% block meta_description %}Thoughts on data analytics, development, technology, and more.{% endblock %}
 
 {% block content %}
-<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            <a href="/" class="text-xl font-bold gradient-text">Harsh's Portfolio</a>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="/" class="hover:text-primary transition-colors">Home</a>
-                <a href="/#projects" class="hover:text-primary transition-colors">Projects</a>
-                <a href="/#contact" class="hover:text-primary transition-colors">Contact</a>
-                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <a href="/" class="text-xl font-bold gradient-text flex items-center gap-2">
+                <i class="fas fa-chart-line"></i>
+                <span class="hidden sm:inline">Harsh's Portfolio</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/about/" class="text-sm font-medium hover:text-primary transition-colors">About</a>
+                <a href="/projects/" class="text-sm font-medium hover:text-primary transition-colors">Projects</a>
+                <a href="/certifications/" class="text-sm font-medium hover:text-primary transition-colors">Certifications</a>
+                <a href="/blog/" class="text-sm font-medium text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors relative" title="Toggle theme">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:inline"></i>
                 </button>
             </div>
+            <button id="mobile-menu-btn" class="md:hidden p-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden glass bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="px-4 py-3 space-y-2">
+            <a href="/" class="block py-2 hover:text-primary transition-colors">Home</a>
+            <a href="/about/" class="block py-2 hover:text-primary transition-colors">About</a>
+            <a href="/projects/" class="block py-2 hover:text-primary transition-colors">Projects</a>
+            <a href="/certifications/" class="block py-2 hover:text-primary transition-colors">Certifications</a>
+            <a href="/blog/" class="block py-2 text-primary font-medium">Blog</a>
+            <a href="/contact/" class="block py-2 hover:text-primary transition-colors">Contact</a>
         </div>
     </div>
 </nav>
 
 <main class="pt-24 pb-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
+        <div class="text-center mb-12" data-aos="fade-up">
             <h1 class="text-5xl font-bold mb-4">My <span class="gradient-text">Blog</span></h1>
             <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Thoughts on development, technology, and more.
+                Thoughts on data analytics, development, technology, and more.
             </p>
         </div>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for post in posts %}
-            <article class="glass rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+            <article class="glass rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'100' }}">
                 {% if post.cover_image %}
                 <div class="h-48 overflow-hidden">
-                    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+                    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
                 </div>
                 {% else %}
                 <div class="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
@@ -42,14 +62,14 @@
                 </div>
                 {% endif %}
                 <div class="p-6">
-                    <p class="text-sm text-primary mb-2">{{ post.created_at|date:"M d, Y" }}</p>
+                    <p class="text-sm text-primary mb-2 font-medium">{{ post.created_at|date:"M d, Y" }}</p>
                     <h3 class="text-xl font-bold mb-2 hover:text-primary transition-colors">
                         <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
                     </h3>
                     <p class="text-gray-600 dark:text-gray-400 line-clamp-3">
                         {% if post.excerpt %}{{ post.excerpt }}{% else %}{{ post.content|truncatewords:30 }}{% endif %}
                     </p>
-                    <a href="{% url 'blog_detail' post.slug %}" class="inline-flex items-center gap-2 mt-4 text-primary hover:gap-3 transition-all">
+                    <a href="{% url 'blog_detail' post.slug %}" class="inline-flex items-center gap-2 mt-4 text-primary hover:gap-3 transition-all font-medium">
                         Read More <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -65,8 +85,28 @@
 </main>
 
 <footer class="py-8 bg-gray-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-        <p class="text-gray-400">© 2024 Developer Portfolio. All rights reserved.</p>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <p class="font-bold gradient-text text-lg">Harsh's Portfolio</p>
+                <p class="text-gray-400 text-sm">Data Analytics & Dashboard Specialist</p>
+            </div>
+            <div class="flex gap-6 items-center">
+                <a href="/" class="text-gray-400 hover:text-primary transition-colors">Home</a>
+                <a href="/about/" class="text-gray-400 hover:text-primary transition-colors">About</a>
+                <a href="/projects/" class="text-gray-400 hover:text-primary transition-colors">Projects</a>
+                <a href="/contact/" class="text-gray-400 hover:text-primary transition-colors">Contact</a>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+            © 2024 {% if profile %}{{ profile.name }}{% else %}Harsh{% endif %}. All rights reserved.
+        </div>
     </div>
 </footer>
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>
 {% endblock %}

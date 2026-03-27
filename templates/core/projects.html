@@ -4,10 +4,13 @@
 {% block title %}Projects - My Portfolio{% endblock %}
 
 {% block content %}
-<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+<nav class="fixed w-full z-50 glass dark:glass bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            <a href="/" class="text-xl font-bold gradient-text">Harsh's Portfolio</a>
+            <a href="/" class="text-xl font-bold gradient-text flex items-center gap-2">
+                <i class="fas fa-chart-line"></i>
+                <span class="hidden sm:inline">Harsh's Portfolio</span>
+            </a>
             <div class="hidden md:flex items-center space-x-6">
                 <a href="/" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
                 <a href="/about/" class="text-sm font-medium hover:text-primary transition-colors">About</a>
@@ -15,7 +18,7 @@
                 <a href="/certifications/" class="text-sm font-medium hover:text-primary transition-colors">Certifications</a>
                 <a href="/blog/" class="text-sm font-medium hover:text-primary transition-colors">Blog</a>
                 <a href="/contact/" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
-                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors relative" title="Toggle theme">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:inline"></i>
                 </button>
@@ -29,7 +32,7 @@
         <div class="px-4 py-3 space-y-2">
             <a href="/" class="block py-2 hover:text-primary transition-colors">Home</a>
             <a href="/about/" class="block py-2 hover:text-primary transition-colors">About</a>
-            <a href="/projects/" class="block py-2 hover:text-primary transition-colors">Projects</a>
+            <a href="/projects/" class="block py-2 text-primary font-medium">Projects</a>
             <a href="/certifications/" class="block py-2 hover:text-primary transition-colors">Certifications</a>
             <a href="/blog/" class="block py-2 hover:text-primary transition-colors">Blog</a>
             <a href="/contact/" class="block py-2 hover:text-primary transition-colors">Contact</a>
