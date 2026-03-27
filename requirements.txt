@@ -5,3 +5,5 @@ pillow
 python-dotenv
 requests
 psycopg2-binary
+cloudinary
+django-cloudinary-storage
