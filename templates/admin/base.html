@@ -773,7 +773,7 @@
             
             <div class="nav-section">
                 <div class="nav-section-title">Main</div>
-                <a href="{% url 'admin:index' %}" class="nav-item {% if request.path == '/admin/' %}active{% endif %}">
+                <a href="{% url 'custom_admin_index' %}" class="nav-item {% if request.path == '/admin/dashboard/' %}active{% endif %}">
                     <i class="fas fa-home"></i>
                     <span>Dashboard</span>
                 </a>

@@ -64,9 +64,10 @@ def custom_skills_view(request):
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('admin/custom-index/', custom_admin_index, name='custom_admin_index'),
+    path('admin/', custom_admin_index, name='admin_index'),
+    path('admin/dashboard/', custom_admin_index, name='custom_admin_index'),
     path('admin/skills/', custom_skills_view, name='custom_skills_view'),
+    path('admin/other/', admin.site.urls),
     path('', include('core.urls')),
 ]
 
