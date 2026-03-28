@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render
 from adminsortable2.admin import SortableAdminMixin
 from .models import SkillCategory, Skill, CurrentlyLearning, Project, Certification, Experience, Education
 
@@ -7,6 +9,30 @@ from .models import SkillCategory, Skill, CurrentlyLearning, Project, Certificat
 class SkillCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'icon', 'order')
     list_editable = ('icon', 'order')
+    
+    def get_urls(self):
+        from django.urls import path
+        urls = super().get_urls()
+        custom_urls = [
+            path('skills/', staff_member_required(self.admin_site.admin_view(self.skills_view)), name='portfolio_skills_view'),
+        ]
+        return custom_urls + urls
+    
+    def skills_view(self, request):
+        skills = Skill.objects.select_related('category').all().order_by('category__order', 'order')
+        skills_by_category = {}
+        for skill in skills:
+            if skill.category not in skills_by_category:
+                skills_by_category[skill.category] = []
+            skills_by_category[skill.category].append(skill)
+        categories = SkillCategory.objects.all().order_by('order')
+        context = {
+            **self.admin_site.each_context(request),
+            'skills_by_category': skills_by_category,
+            'categories': categories,
+            'title': 'Skills Management',
+        }
+        return render(request, 'admin/portfolio/skill_change_list.html', context)
 
 
 @admin.register(Skill)

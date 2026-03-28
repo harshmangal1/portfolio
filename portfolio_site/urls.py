@@ -32,9 +32,41 @@ def custom_admin_index(request):
     
     return render(request, 'admin/index.html', context)
 
+
+def custom_skills_view(request):
+    from portfolio.models import Skill, SkillCategory, Project
+    from blog.models import BlogPost
+    from contact.models import ContactMessage
+    
+    skills = Skill.objects.select_related('category').all().order_by('category__order', 'order')
+    skills_by_category = {}
+    for skill in skills:
+        if skill.category not in skills_by_category:
+            skills_by_category[skill.category] = []
+        skills_by_category[skill.category].append(skill)
+    
+    categories = SkillCategory.objects.all().order_by('order')
+    
+    context = {
+        'project_count': Project.objects.count(),
+        'skill_count': Skill.objects.count(),
+        'blog_count': BlogPost.objects.count(),
+        'certification_count': 0,
+        'unread_messages': ContactMessage.objects.filter(read=False).count(),
+        'recent_projects': [],
+        'recent_messages': [],
+        'skills_by_category': skills_by_category,
+        'categories': categories,
+        'user': request.user,
+    }
+    
+    return render(request, 'admin/portfolio/skill_change_list.html', context)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin/custom-index/', custom_admin_index, name='custom_admin_index'),
+    path('admin/skills/', custom_skills_view, name='custom_skills_view'),
     path('', include('core.urls')),
 ]
 

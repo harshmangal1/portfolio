@@ -323,31 +323,278 @@
         .admin-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.9rem;
         }
         
         .admin-table th {
             text-align: left;
-            padding: 0.75rem 1rem;
-            font-size: 0.75rem;
+            padding: 0.875rem 1rem;
+            font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-secondary);
+            background: var(--bg-dark);
             border-bottom: 1px solid var(--border-color);
         }
         
         .admin-table td {
-            padding: 1rem;
+            padding: 0.875rem 1rem;
             border-bottom: 1px solid var(--border-color);
-            font-size: 0.9rem;
+            vertical-align: middle;
         }
         
-        .admin-table tr:hover td {
+        .admin-table tbody tr:nth-child(even) {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        
+        .admin-table tbody tr:hover td {
             background: var(--bg-card-hover);
         }
         
         .admin-table tr:last-child td {
             border-bottom: none;
+        }
+        
+        /* Table Links */
+        .admin-table a {
+            color: var(--text-primary) !important;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .admin-table a:hover {
+            color: var(--primary) !important;
+        }
+        
+        /* Zebra Striping for Result List */
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .results th {
+            text-align: left;
+            padding: 0.875rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            background: var(--bg-dark);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .results td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .results tbody tr:nth-child(even) {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        
+        .results tbody tr:hover {
+            background: var(--bg-card-hover) !important;
+        }
+        
+        .results tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .results a {
+            color: var(--text-primary) !important;
+        }
+        
+        .results a:hover {
+            color: var(--primary) !important;
+        }
+        
+        /* Row Actions */
+        .row-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Compact Form Inputs */
+        .compact-input {
+            width: 70px !important;
+            padding: 0.35rem 0.5rem !important;
+            font-size: 0.85rem !important;
+            border-radius: 6px !important;
+            background: var(--bg-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+            text-align: center;
+        }
+        
+        .compact-input:focus {
+            border-color: var(--primary) !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
+        }
+        
+        /* Form Field Styling */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="url"],
+        input[type="password"],
+        textarea,
+        select {
+            background: var(--bg-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            color: var(--text-primary) !important;
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.9rem !important;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--primary) !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+        }
+        
+        /* Skill Badge */
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+        
+        /* Proficiency Badge */
+        .proficiency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .proficiency-badge.high,
+        .proficiency-badge.expert {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+        
+        .proficiency-badge.medium,
+        .proficiency-badge.intermediate {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+        
+        .proficiency-badge.low,
+        .proficiency-badge.beginner {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        
+        /* Dark Theme Admin Fixes */
+        .admin_change_list #result_list td,
+        .change-list #result_list td {
+            color: var(--text-primary) !important;
+        }
+        
+        .admin_change_list #result_list a,
+        .change-list #result_list a {
+            color: var(--text-primary) !important;
+        }
+        
+        .admin_change_list #result_list .text-primary,
+        .change-list #result_list .text-primary {
+            color: var(--primary) !important;
+        }
+        
+        /* Django Admin Object Tools */
+        .object-tools {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .object-tools li {
+            list-style: none;
+        }
+        
+        .object-tools a {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .object-tools a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Admin Actions Bar */
+        .actions {
+            background: var(--bg-card);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .actions label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .actions select {
+            background: var(--bg-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+            padding: 0.35rem 0.75rem !important;
+            border-radius: 6px !important;
+        }
+        
+        /* Pagination */
+        .paginator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 10px;
+        }
+        
+        .paginator a {
+            color: var(--text-primary) !important;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            background: var(--bg-dark);
+            text-decoration: none;
+        }
+        
+        .paginator a:hover {
+            background: var(--bg-card-hover);
+        }
+        
+        .paginator .this-page {
+            background: var(--primary);
+            color: white !important;
         }
         
         /* Action Buttons */

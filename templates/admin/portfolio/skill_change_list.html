@@ -1,0 +1,137 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Skills | Harsh Portfolio Admin{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <div class="section-header">
+        <div class="section-title">
+            <i class="fas fa-code"></i>
+            <span>Skills Management</span>
+        </div>
+        <div class="quick-actions">
+            <a href="{% url 'admin:portfolio_skill_add' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> Add Skill
+            </a>
+            <a href="{% url 'admin:portfolio_skillcategory_add' %}" class="btn btn-secondary btn-sm">
+                <i class="fas fa-layer-group"></i> Add Category
+            </a>
+        </div>
+    </div>
+    
+    <div class="section-body">
+        {% if skills_by_category %}
+        <div class="admin-table-wrapper" style="overflow-x: auto;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">Order</th>
+                        <th>Icon</th>
+                        <th>Skill Name</th>
+                        <th>Category</th>
+                        <th>Proficiency</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category, skills in skills_by_category.items %}
+                    <tr style="background: var(--bg-dark);">
+                        <td colspan="6" style="font-weight: 600; color: var(--primary); padding: 0.75rem 1rem;">
+                            <i class="{{ category.icon }}"></i> {{ category.name }}
+                            <span class="nav-badge" style="margin-left: 0.5rem;">{{ skills|length }}</span>
+                        </td>
+                    </tr>
+                    {% for skill in skills %}
+                    <tr>
+                        <td>
+                            <input type="number" class="compact-input" value="{{ skill.order|default:0 }}" min="0" style="width: 60px;">
+                        </td>
+                        <td>
+                            <div style="width: 36px; height: 36px; background: var(--bg-dark); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="{{ skill.icon }} text-primary"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <span style="font-weight: 500;">{{ skill.name }}</span>
+                        </td>
+                        <td>
+                            <span class="skill-badge">
+                                <i class="{{ category.icon }}"></i>
+                                {{ category.name }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if skill.proficiency_level >= 80 %}
+                            <span class="proficiency-badge high">{{ skill.proficiency_level }}%</span>
+                            {% elif skill.proficiency_level >= 50 %}
+                            <span class="proficiency-badge medium">{{ skill.proficiency_level }}%</span>
+                            {% else %}
+                            <span class="proficiency-badge low">{{ skill.proficiency_level }}%</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <a href="{% url 'admin:portfolio_skill_change' skill.id %}" class="btn-icon" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'admin:portfolio_skill_delete' skill.id %}" class="btn-icon" title="Delete" style="color: var(--danger);">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+            <i class="fas fa-code" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">No Skills Added Yet</h3>
+            <p style="margin-bottom: 1.5rem;">Start by adding your first skill to showcase your expertise.</p>
+            <a href="{% url 'admin:portfolio_skill_add' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add First Skill
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Categories Section -->
+<div class="section-card">
+    <div class="section-header">
+        <div class="section-title">
+            <i class="fas fa-layer-group"></i>
+            <span>Skill Categories</span>
+        </div>
+    </div>
+    <div class="section-body">
+        {% if categories %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            {% for category in categories %}
+            <div style="background: var(--bg-dark); padding: 1rem 1.25rem; border-radius: 10px; display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="{{ category.icon }} text-white"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600;">{{ category.name }}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-secondary);">{{ category.skill_set.count }} skills</div>
+                </div>
+                <div class="row-actions">
+                    <a href="{% url 'admin:portfolio_skillcategory_change' category.id %}" class="btn-icon" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+            <p>No categories defined. <a href="{% url 'admin:portfolio_skillcategory_add' %}">Add one</a></p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

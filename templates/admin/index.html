@@ -214,8 +214,8 @@
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                     {% for skill in skills|slice:":5" %}
-                    <span style="background: var(--bg-card); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">
-                        {{ skill.icon }} {{ skill.name }}
+                    <span style="background: var(--bg-card); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        <i class="{{ skill.icon }}"></i> {{ skill.name }}
                     </span>
                     {% endfor %}
                     {% if skills|length > 5 %}
