@@ -15,7 +15,7 @@ class ProfileAdmin(admin.ModelAdmin):
             'fields': ('github', 'linkedin', 'email', 'phone')
         }),
         ('Files', {
-            'fields': ('resume',)
+            'fields': ('resume', 'resume_url')
         }),
         ('Settings', {
             'fields': ('github_username',)
