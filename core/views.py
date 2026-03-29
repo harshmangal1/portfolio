@@ -36,6 +36,8 @@ def home(request):
         if category_skills:
             skills_by_category[category] = category_skills
     
+    currently_learning = CurrentlyLearning.objects.all().order_by('order')
+    
     return render(request, 'core/home.html', {
         'profile': profile,
         'hero_titles': hero_titles,
@@ -49,6 +51,7 @@ def home(request):
         'certifications': certifications,
         'blog_posts': blog_posts,
         'github_repos': github_repos,
+        'currently_learning': currently_learning,
     })
 
 
