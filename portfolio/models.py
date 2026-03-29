@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 from auditlog.registry import auditlog
 
 
@@ -62,7 +63,7 @@ class Project(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='web')
     github_link = models.URLField(max_length=200, blank=True, default="")
     live_demo = models.URLField(max_length=200, blank=True, default="")
-    image = models.ImageField(upload_to='projects/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -83,7 +84,7 @@ class Certification(models.Model):
     organization = models.CharField(max_length=200, default="Organization")
     issued_date = models.DateField()
     credential_id = models.CharField(max_length=200, blank=True, default="", help_text="Credential ID or URL")
-    image = models.ImageField(upload_to='certifications/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
 
     class Meta:

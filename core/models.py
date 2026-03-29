@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class Profile(models.Model):
@@ -6,12 +7,12 @@ class Profile(models.Model):
     title = models.CharField(max_length=200, default="Full Stack Developer")
     short_intro = models.CharField(max_length=300, default="I build beautiful web applications", help_text="Short introduction for hero section")
     bio = models.TextField(default="")
-    profile_image = models.ImageField(upload_to='profile/', blank=True, null=True)
+    profile_image = CloudinaryField('image', blank=True, null=True)
     github = models.URLField(max_length=200, blank=True, default="")
     linkedin = models.URLField(max_length=200, blank=True, default="")
     email = models.EmailField(max_length=200, blank=True, default="")
     phone = models.CharField(max_length=20, blank=True, default="", help_text="Phone number with country code")
-    resume = models.FileField(upload_to='resume/', blank=True, null=True, help_text="Upload PDF resume")
+    resume = CloudinaryField(resource_type='raw', blank=True, null=True, help_text="Upload PDF resume")
     
     # SEO
     meta_title = models.CharField(max_length=60, blank=True, default="")

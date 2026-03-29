@@ -5,7 +5,11 @@ from django.conf.urls.static import static
 from django.views.static import serve
 from django.urls import re_path
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
+
+@never_cache
 def custom_admin_index(request):
     from portfolio.models import Project, Skill, SkillCategory, Certification
     from blog.models import BlogPost
@@ -33,6 +37,7 @@ def custom_admin_index(request):
     return render(request, 'admin/index.html', context)
 
 
+@never_cache
 def custom_skills_view(request):
     from portfolio.models import Skill, SkillCategory, Project
     from blog.models import BlogPost
@@ -64,18 +69,12 @@ def custom_skills_view(request):
 
 
 urlpatterns = [
-    path('admin/', custom_admin_index, name='admin_index'),
-    path('admin/dashboard/', custom_admin_index, name='custom_admin_index'),
-    path('admin/skills/', custom_skills_view, name='custom_skills_view'),
-    path('admin/other/', admin.site.urls),
+    path('admin/', admin.site.urls),  # Django admin handles login/logout
+    path('dashboard/', custom_admin_index, name='custom_admin_index'),
+    path('skills-management/', custom_skills_view, name='custom_skills_view'),
     path('', include('core.urls')),
 ]
 
-# Serve media files in development and production
+# Serve static files only (media is handled by Cloudinary)
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-else:
-    urlpatterns += [
-        re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-    ]

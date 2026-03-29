@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from cloudinary.models import CloudinaryField
 
 
 class BlogPost(models.Model):
@@ -7,7 +8,7 @@ class BlogPost(models.Model):
     slug = models.SlugField(max_length=300, unique=True)
     content = models.TextField()
     excerpt = models.TextField(blank=True, help_text='Short summary for listing')
-    cover_image = models.ImageField(upload_to='blog/', blank=True, null=True)
+    cover_image = CloudinaryField('image', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     published = models.BooleanField(default=False)

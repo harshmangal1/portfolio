@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 load_dotenv()
 
@@ -40,11 +43,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Login Configuration
-LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = '/admin/'
-LOGOUT_REDIRECT_URL = '/admin/login/'
-
 ROOT_URLCONF = 'portfolio_site.urls'
 
 TEMPLATES = [
@@ -59,7 +57,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'core.context_processors.media_url',
                 'core.context_processors.google_analytics',
             ],
         },
@@ -124,29 +121,35 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static'] if DEBUG else []
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media Files Configuration
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
 # Cloudinary Configuration
-CLOUDINARY_CLOUD_NAME = 'dgggmgzas'
-CLOUDINARY_API_KEY = '467741997849787'
-CLOUDINARY_API_SECRET = 'wN7oPL0_W5uzP9jIR1aqtvX18UI'
+CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', 'dgggmgzas')
+CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', '467741997849787')
+CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', 'wN7oPL0_W5uzP9jIR1aqtvX18UI')
+
+# Configure Cloudinary
+cloudinary.config(
+    cloud_name=CLOUDINARY_CLOUD_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET,
+    secure=True
+)
+
+# Use Cloudinary as the default file storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Media URL for templates (Cloudinary URLs)
+MEDIA_URL = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/image/upload/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 X_FRAME_OPTIONS = 'DENY'
 
-# Cache Control - No caching for admin to ensure fresh content
+# Cache Control
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
-
-# Cloudinary Configuration (enabled)
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-CLOUDINARY_HOST = f'https://api.cloudinary.com/v1_1/{CLOUDINARY_CLOUD_NAME}'
 
 # reCAPTCHA Configuration
 RECAPTCHA_SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY', '')
