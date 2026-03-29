@@ -138,7 +138,9 @@ cloudinary.config(
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Media URL for templates (Cloudinary URLs)
-MEDIA_URL = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/image/upload/'
+MEDIA_URL = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/'
+MEDIA_URL_IMAGE = MEDIA_URL + 'image/upload/'
+MEDIA_URL_RAW = MEDIA_URL + 'raw/upload/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
