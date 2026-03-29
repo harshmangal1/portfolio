@@ -119,8 +119,8 @@
                             View My Work
                             <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        {% if profile.resume %}
-                        <a href="{{ profile.resume_url }}" target="_blank" class="px-6 py-3.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary transition-all duration-300 flex items-center gap-2 font-semibold">
+                        {% if profile.get_resume_url %}
+                        <a href="{{ profile.get_resume_url }}" target="_blank" class="px-6 py-3.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-primary hover:text-primary transition-all duration-300 flex items-center gap-2 font-semibold">
                             <i class="fas fa-file-pdf"></i>
                             View Resume
                         </a>

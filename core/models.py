@@ -13,6 +13,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=200, blank=True, default="")
     phone = models.CharField(max_length=20, blank=True, default="", help_text="Phone number with country code")
     resume = CloudinaryField(resource_type='raw', blank=True, null=True, help_text="Upload PDF resume")
+    resume_url = models.URLField(max_length=500, blank=True, default="", help_text="Direct URL to resume (e.g., Google Drive, Dropbox, or Cloudinary public URL)")
     
     # SEO
     meta_title = models.CharField(max_length=60, blank=True, default="")
@@ -28,8 +29,9 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
     
-    @property
-    def resume_url(self):
+    def get_resume_url(self):
+        if self.resume_url:
+            return self.resume_url
         if self.resume:
             return self.resume.url
         return None
