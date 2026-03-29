@@ -1,5 +1,6 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
+import cloudinary
 
 
 class Profile(models.Model):
@@ -27,6 +28,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_resume_url(self):
+        if self.resume:
+            return cloudinary.url(self.resume.public_id, resource_type='raw')
+        return None
 
 
 class HeroTitle(models.Model):
