@@ -112,32 +112,15 @@
             overflow: hidden;
         }
         
-        /* Scroll Animations */
+        /* Scroll Animations - Safe Fallback */
         .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1 !important;
+            transform: none !important;
         }
         
-        /* Loading States */
+        /* Loading States - Safe Fallback */
         img[loading="lazy"] {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        img[loading="lazy"].loaded {
-            opacity: 1;
-        }
-    </style>
-    
-    <style>
-        /* Ensure images load gracefully */
-        img {
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
+            opacity: 1 !important;
         }
     </style>
     {% block extra_head %}{% endblock %}
@@ -150,8 +133,13 @@
         gtag('config', '{{ GOOGLE_ANALYTICS_ID }}');
     </script>
     {% endif %}
-</head>
-<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    </head>
+    <body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <noscript>
+        <style>
+            section, header, main, footer, nav, div, h1, h2, h3, p, a, button { opacity: 1 !important; visibility: visible !important; }
+        </style>
+    </noscript>
     {% block content %}{% endblock %}
     
     <script>

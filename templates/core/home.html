@@ -233,39 +233,6 @@
             <i class="fas fa-chevron-down"></i>
         </a>
     </section>
-    
-    <script>
-        // Typing Animation
-        const titles = ['Insights 💡', 'Dashboards 📊', 'Solutions 🚀', 'Stories 📈'];
-        let titleIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typedTitle = document.getElementById('typed-title');
-        
-        function typeEffect() {
-            const currentTitle = titles[titleIndex];
-            
-            if (isDeleting) {
-                typedTitle.textContent = currentTitle.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedTitle.textContent = currentTitle.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            if (!isDeleting && charIndex === currentTitle.length) {
-                setTimeout(() => { isDeleting = true; }, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                titleIndex = (titleIndex + 1) % titles.length;
-            }
-            
-            const speed = isDeleting ? 50 : 100;
-            setTimeout(typeEffect, speed);
-        }
-        
-        document.addEventListener('DOMContentLoaded', typeEffect);
-    </script>
 
     <!-- About Section - Clean & Focused -->
     <section id="about" class="py-20 bg-white dark:bg-gray-900">
@@ -884,51 +851,56 @@
 {% endif %}
 
 <script>
-    // Initialize AOS
-    AOS.init({
-        duration: 800,
-        easing: 'ease-out',
-        once: true,
-        offset: 100
-    });
+    // Initialize AOS with fallback
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: true,
+            offset: 100,
+            disable: false
+        });
+    }
 
-    // Typing Animation
+    // Typing Animation with fallback
     const phrases = [
-        "I build Data Dashboards.",
-        "I Analyze Data with Python.",
-        "I Create Interactive Visuals.",
-        "I Transform Data into Insights."
+        "Data Dashboards",
+        "Data Analysis",
+        "Interactive Visuals",
+        "Business Insights"
     ];
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
     const typingElement = document.querySelector('.typing-text');
 
-    function typeEffect() {
-        const currentPhrase = phrases[phraseIndex];
-        
-        if (isDeleting) {
-            typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
-            charIndex++;
+    if (typingElement) {
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
         }
-
-        let typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            typeSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = 500;
-        }
-
-        setTimeout(typeEffect, typeSpeed);
+        typeEffect();
     }
-    typeEffect();
 
     // Mobile Menu
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
