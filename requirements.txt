@@ -12,3 +12,4 @@ django-cloudinary-storage
 django-two-factor-auth
 qrcode
 phonenumbers
+dj-database-url

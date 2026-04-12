@@ -15,28 +15,28 @@ def home(request):
             short_intro="I build beautiful web applications",
             bio="Welcome to my portfolio website."
         )
-    hero_titles = HeroTitle.objects.filter(active=True)
+    hero_titles = list(HeroTitle.objects.filter(active=True))
     career_objective = CareerObjective.objects.filter(active=True).first()
-    stats = Stat.objects.all().order_by('order')
-    skills = Skill.objects.all().order_by('category', '-proficiency_level')
-    skill_categories = SkillCategory.objects.all()
-    projects = Project.objects.filter(featured=True).order_by('-created_at')[:3]
-    experiences = Experience.objects.all()
-    education = Education.objects.all()
-    certifications = Certification.objects.all()[:4]
-    blog_posts = BlogPost.objects.filter(published=True).order_by('-created_at')[:3]
-    github_repos = []
+    stats = list(Stat.objects.all().order_by('order'))
+    skills = Skill.objects.select_related('category').all().order_by('category__order', 'order')
+    skill_categories = list(SkillCategory.objects.all())
+    projects = list(Project.objects.filter(featured=True).order_by('-created_at')[:3])
+    experiences = list(Experience.objects.all())
+    education = list(Education.objects.all())
+    certifications = list(Certification.objects.all()[:4])
+    blog_posts = list(BlogPost.objects.filter(published=True).order_by('-created_at')[:3])
     
+    github_repos = []
     if profile and profile.github_username:
         github_repos = get_github_repos(profile.github_username, 6)
     
     skills_by_category = {}
     for category in skill_categories:
-        category_skills = skills.filter(category=category)
+        category_skills = [s for s in skills if s.category_id == category.id]
         if category_skills:
             skills_by_category[category] = category_skills
     
-    currently_learning = CurrentlyLearning.objects.all().order_by('order')
+    currently_learning = list(CurrentlyLearning.objects.all().order_by('order'))
     
     return render(request, 'core/home.html', {
         'profile': profile,
@@ -58,15 +58,15 @@ def home(request):
 def about(request):
     profile = Profile.objects.first()
     career_objective = CareerObjective.objects.filter(active=True).first()
-    experiences = Experience.objects.all()
-    education = Education.objects.all()
-    skill_categories = SkillCategory.objects.all()
-    skills = Skill.objects.all().order_by('category', '-proficiency_level')
-    currently_learning = CurrentlyLearning.objects.all().order_by('order')
+    experiences = list(Experience.objects.all())
+    education = list(Education.objects.all())
+    skill_categories = list(SkillCategory.objects.all())
+    skills = Skill.objects.select_related('category').all().order_by('category__order', 'order')
+    currently_learning = list(CurrentlyLearning.objects.all().order_by('order'))
     
     skills_by_category = {}
     for category in skill_categories:
-        category_skills = skills.filter(category=category)
+        category_skills = [s for s in skills if s.category_id == category.id]
         if category_skills:
             skills_by_category[category] = category_skills
     

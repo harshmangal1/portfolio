@@ -36,7 +36,7 @@ def get_github_repos(username, max_repos=6):
                         'updated': repo.get('updated_at', '')[:10],
                     })
             
-            cache.set(cache_key, repo_data, 3600)
+            cache.set(cache_key, repo_data, 86400)  # 24 hours
             return repo_data
     except Exception:
         pass
