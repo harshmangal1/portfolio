@@ -6,5 +6,6 @@ pip install -r requirements.txt
 
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput --ignore='*.txt'
+python manage.py create_superuser
 
 exec gunicorn portfolio_site.wsgi:application
