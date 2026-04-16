@@ -7,6 +7,7 @@ from django.urls import re_path
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from django.contrib.auth import views as auth_views
 
 
 @never_cache
@@ -69,9 +70,25 @@ def custom_skills_view(request):
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Django admin handles login/logout
+    path('admin/', admin.site.urls),
     path('dashboard/', custom_admin_index, name='custom_admin_index'),
     path('skills-management/', custom_skills_view, name='custom_skills_view'),
+    path('password-reset/', auth_views.PasswordResetView.as_view(
+        template_name='admin/password_reset.html',
+        email_template_name='admin/password_reset_email.html',
+        subject_template_name='admin/password_reset_subject.txt',
+        success_url='/password-reset/done/'
+    ), name='password_reset'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
+        template_name='admin/password_reset_done.html'
+    ), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+        template_name='admin/password_reset_confirm.html',
+        success_url='/reset/done/'
+    ), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
+        template_name='admin/password_reset_complete.html'
+    ), name='password_reset_complete'),
     path('', include('core.urls')),
 ]
 
