@@ -786,37 +786,37 @@
             
             <div class="nav-section">
                 <div class="nav-section-title">Portfolio</div>
-                <a href="{% url 'admin:portfolio_project_changelist' %}" class="nav-item">
+                <a href="/admin/portfolio/project/" class="nav-item">
                     <i class="fas fa-folder-open"></i>
                     <span>Projects</span>
                     <span class="nav-badge">{{ project_count|default:"0" }}</span>
                 </a>
-                <a href="{% url 'admin:portfolio_project_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/portfolio/project/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Project</span>
                 </a>
-                <a href="{% url 'admin:portfolio_skill_changelist' %}" class="nav-item">
+                <a href="/admin/portfolio/skill/" class="nav-item">
                     <i class="fas fa-code"></i>
                     <span>Skills</span>
                     <span class="nav-badge">{{ skill_count|default:"0" }}</span>
                 </a>
-                <a href="{% url 'admin:portfolio_skill_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/portfolio/skill/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Skill</span>
                 </a>
-                <a href="{% url 'admin:portfolio_skillcategory_changelist' %}" class="nav-item">
+                <a href="/admin/portfolio/skillcategory/" class="nav-item">
                     <i class="fas fa-layer-group"></i>
                     <span>Categories</span>
                 </a>
-                <a href="{% url 'admin:portfolio_certification_changelist' %}" class="nav-item">
+                <a href="/admin/portfolio/certification/" class="nav-item">
                     <i class="fas fa-certificate"></i>
                     <span>Certifications</span>
                 </a>
-                <a href="{% url 'admin:portfolio_certification_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/portfolio/certification/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Certification</span>
                 </a>
-                <a href="{% url 'admin:portfolio_currentlylearning_changelist' %}" class="nav-item">
+                <a href="/admin/portfolio/currentlylearning/" class="nav-item">
                     <i class="fas fa-book-open"></i>
                     <span>Learning</span>
                 </a>
@@ -824,12 +824,12 @@
             
             <div class="nav-section">
                 <div class="nav-section-title">Content</div>
-                <a href="{% url 'admin:blog_blogpost_changelist' %}" class="nav-item">
+                <a href="/admin/blog/blogpost/" class="nav-item">
                     <i class="fas fa-blog"></i>
                     <span>Blog Posts</span>
                     <span class="nav-badge">{{ blog_count|default:"0" }}</span>
                 </a>
-                <a href="{% url 'admin:blog_blogpost_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/blog/blogpost/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Write Post</span>
                 </a>
@@ -837,7 +837,7 @@
             
             <div class="nav-section">
                 <div class="nav-section-title">Communication</div>
-                <a href="{% url 'admin:contact_contactmessage_changelist' %}" class="nav-item">
+                <a href="/admin/contact/contactmessage/" class="nav-item">
                     <i class="fas fa-envelope"></i>
                     <span>Messages</span>
                     {% if unread_messages > 0 %}
@@ -848,43 +848,43 @@
             
             <div class="nav-section">
                 <div class="nav-section-title">Profile & About</div>
-                <a href="{% url 'admin:core_profile_changelist' %}" class="nav-item">
+                <a href="/admin/core/profile/" class="nav-item">
                     <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
-                <a href="{% url 'admin:core_profile_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/core/profile/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Edit Profile</span>
                 </a>
-                <a href="{% url 'admin:core_herotitle_changelist' %}" class="nav-item">
+                <a href="/admin/core/herotitle/" class="nav-item">
                     <i class="fas fa-heading"></i>
                     <span>Hero Titles</span>
                 </a>
-                <a href="{% url 'admin:core_herotitle_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/core/herotitle/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Title</span>
                 </a>
-                <a href="{% url 'admin:core_careerobjective_changelist' %}" class="nav-item">
+                <a href="/admin/core/careerobjective/" class="nav-item">
                     <i class="fas fa-bullseye"></i>
                     <span>Career Objective</span>
                 </a>
-                <a href="{% url 'admin:core_careerobjective_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/core/careerobjective/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Objective</span>
                 </a>
-                <a href="{% url 'admin:core_stat_changelist' %}" class="nav-item">
+                <a href="/admin/core/stat/" class="nav-item">
                     <i class="fas fa-chart-bar"></i>
                     <span>Stats</span>
                 </a>
-                <a href="{% url 'admin:core_stat_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/core/stat/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Stat</span>
                 </a>
-                <a href="{% url 'admin:portfolio_education_changelist' %}" class="nav-item">
+                <a href="/admin/portfolio/education/" class="nav-item">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Education</span>
                 </a>
-                <a href="{% url 'admin:portfolio_education_add' %}" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="/admin/portfolio/education/add/" class="nav-item" style="padding-left: 2.5rem; font-size: 0.85rem; color: var(--text-secondary);">
                     <i class="fas fa-plus-circle text-success"></i>
                     <span>Add Education</span>
                 </a>
@@ -895,7 +895,7 @@
                     <i class="fas fa-external-link-alt"></i>
                     <span>View Site</span>
                 </a>
-                <a href="{% url 'admin:logout' %}" class="nav-item">
+                <a href="/admin-logout/" class="nav-item">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>

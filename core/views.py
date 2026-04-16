@@ -20,10 +20,10 @@ def home(request):
     stats = list(Stat.objects.all().order_by('order'))
     skills = Skill.objects.select_related('category').all().order_by('category__order', 'order')
     skill_categories = list(SkillCategory.objects.all())
-    projects = list(Project.objects.filter(featured=True).order_by('-created_at')[:3])
+    projects = list(Project.objects.all().order_by('-created_at')[:3])
     experiences = list(Experience.objects.all())
     education = list(Education.objects.all())
-    certifications = list(Certification.objects.all()[:4])
+    certifications = list(Certification.objects.all())
     blog_posts = list(BlogPost.objects.filter(published=True).order_by('-created_at')[:3])
     
     github_repos = []

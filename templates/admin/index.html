@@ -14,7 +14,7 @@
 
 <!-- Stats Grid -->
 <div class="dashboard-grid">
-    <a href="{% url 'admin:portfolio_project_changelist' %}" class="stat-card animate-in" style="animation-delay: 0.1s;">
+    <a href="/admin/portfolio/project/" class="stat-card animate-in" style="animation-delay: 0.1s;">
         <div class="stat-icon projects">
             <i class="fas fa-project-diagram"></i>
         </div>
@@ -22,7 +22,7 @@
         <div class="stat-label">Total Projects</div>
     </a>
     
-    <a href="{% url 'admin:portfolio_skill_changelist' %}" class="stat-card animate-in" style="animation-delay: 0.15s;">
+    <a href="/admin/portfolio/skill/" class="stat-card animate-in" style="animation-delay: 0.15s;">
         <div class="stat-icon skills">
             <i class="fas fa-code"></i>
         </div>
@@ -30,7 +30,7 @@
         <div class="stat-label">Skills</div>
     </a>
     
-    <a href="{% url 'admin:blog_blogpost_changelist' %}" class="stat-card animate-in" style="animation-delay: 0.2s;">
+    <a href="/admin/blog/blogpost/" class="stat-card animate-in" style="animation-delay: 0.2s;">
         <div class="stat-icon blog">
             <i class="fas fa-blog"></i>
         </div>
@@ -38,7 +38,7 @@
         <div class="stat-label">Blog Posts</div>
     </a>
     
-    <a href="{% url 'admin:contact_contactmessage_changelist' %}" class="stat-card animate-in" style="animation-delay: 0.25s;">
+    <a href="/admin/contact/contactmessage/" class="stat-card animate-in" style="animation-delay: 0.25s;">
         <div class="stat-icon messages">
             <i class="fas fa-envelope"></i>
         </div>
@@ -57,16 +57,16 @@
     </div>
     <div class="section-body">
         <div class="quick-actions">
-            <a href="{% url 'admin:portfolio_project_add' %}" class="btn btn-primary">
+            <a href="/admin/portfolio/project/add/" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Project
             </a>
-            <a href="{% url 'admin:portfolio_skill_add' %}" class="btn btn-primary">
+            <a href="/admin/portfolio/skill/add/" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Skill
             </a>
-            <a href="{% url 'admin:blog_blogpost_add' %}" class="btn btn-primary">
+            <a href="/admin/blog/blogpost/add/" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Write Blog Post
             </a>
-            <a href="{% url 'admin:portfolio_certification_add' %}" class="btn btn-secondary">
+            <a href="/admin/portfolio/certification/add/" class="btn btn-secondary">
                 <i class="fas fa-certificate"></i> Add Certification
             </a>
         </div>
@@ -117,7 +117,7 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{% url 'admin:portfolio_project_change' project.id %}" class="btn-icon">
+                            <a href="/admin/portfolio/project/{{ project.id }}/change/" class="btn-icon">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>
@@ -129,7 +129,7 @@
             <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
                 <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
                 <p>No projects yet</p>
-                <a href="{% url 'admin:portfolio_project_add' %}" class="btn btn-primary btn-sm" style="margin-top: 1rem;">
+                <a href="/admin/portfolio/project/add/" class="btn btn-primary btn-sm" style="margin-top: 1rem;">
                     <i class="fas fa-plus"></i> Add First Project
                 </a>
             </div>
@@ -173,7 +173,7 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{% url 'admin:contact_contactmessage_change' message.id %}" class="btn-icon">
+                            <a href="/admin/contact/contactmessage/{{ message.id }}/change/" class="btn-icon">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>
@@ -229,7 +229,7 @@
         <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
             <i class="fas fa-code" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
             <p>No skills added yet</p>
-            <a href="{% url 'admin:portfolio_skill_add' %}" class="btn btn-primary btn-sm" style="margin-top: 1rem;">
+            <a href="/admin/portfolio/skill/add/" class="btn btn-primary btn-sm" style="margin-top: 1rem;">
                 <i class="fas fa-plus"></i> Add First Skill
             </a>
         </div>

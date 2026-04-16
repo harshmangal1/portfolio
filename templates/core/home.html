@@ -134,15 +134,15 @@
                     <!-- Key Metrics (Dynamic from DB) -->
                     <div class="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
                         <div class="text-center lg:text-left">
-                            <div class="text-2xl sm:text-3xl font-bold gradient-text counter" data-target="{{ projects.count|default:0 }}">{{ projects.count|default:"0" }}</div>
+                            <div class="text-2xl sm:text-3xl font-bold gradient-text counter" data-target="{{ projects|length }}">{{ projects|length }}</div>
                             <div class="text-xs sm:text-sm text-gray-500">Projects</div>
                         </div>
                         <div class="text-center lg:text-left">
-                            <div class="text-2xl sm:text-3xl font-bold gradient-text counter" data-target="{{ skills.count|default:0 }}">{{ skills.count|default:"0" }}</div>
+                            <div class="text-2xl sm:text-3xl font-bold gradient-text counter" data-target="{{ skills|length }}">{{ skills|length }}</div>
                             <div class="text-xs sm:text-sm text-gray-500">Skills</div>
                         </div>
                         <div class="text-center lg:text-left">
-                            <div class="text-2xl sm:text-3xl font-bold gradient-text counter" data-target="{{ certifications.count|default:0 }}">{{ certifications.count|default:"0" }}</div>
+                            <div class="text-2xl sm:text-3xl font-bold gradient-text counter" data-target="{{ certifications|length }}">{{ certifications|length }}</div>
                             <div class="text-xs sm:text-sm text-gray-500">Certifications</div>
                         </div>
                     </div>
