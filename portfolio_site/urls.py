@@ -7,7 +7,7 @@ from django.urls import re_path
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views, logout
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
@@ -15,6 +15,16 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+from django.http import HttpResponseRedirect
+
+
+class CustomAdminSite(admin.AdminSite):
+    def logout(self, request, extra_context=None):
+        logout(request)
+        return HttpResponseRedirect('/admin/login/')
+
+
+custom_admin_site = CustomAdminSite(name='admin')
 
 
 @never_cache
@@ -77,6 +87,11 @@ def custom_skills_view(request):
 
 
 @never_cache
+def admin_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/admin/login/')
+
+@never_cache
 def admin_password_reset_request(request):
     from django.contrib.auth import get_user_model
     User = get_user_model()
@@ -130,7 +145,8 @@ def admin_password_reset_request(request):
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', custom_admin_site.urls),
+    path('admin-logout/', admin_logout, name='admin_logout'),
     path('dashboard/', custom_admin_index, name='custom_admin_index'),
     path('skills-management/', custom_skills_view, name='custom_skills_view'),
     path('password-reset/', admin_password_reset_request, name='password_reset'),
