@@ -86,6 +86,17 @@ class CertificationAdmin(admin.ModelAdmin):
     list_display = ('name', 'organization', 'issued_date', 'order')
     search_fields = ('name', 'organization')
     list_editable = ('order',)
+    fieldsets = (
+        ('Basic Info', {
+            'fields': ('name', 'organization', 'issued_date', 'order')
+        }),
+        ('Media', {
+            'fields': ('image', 'document')
+        }),
+        ('Credential', {
+            'fields': ('credential_id',)
+        }),
+    )
 
 
 @admin.register(Experience)

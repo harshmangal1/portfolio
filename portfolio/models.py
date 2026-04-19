@@ -84,7 +84,8 @@ class Certification(models.Model):
     organization = models.CharField(max_length=200, default="Organization")
     issued_date = models.DateField()
     credential_id = models.CharField(max_length=200, blank=True, default="", help_text="Credential ID or URL")
-    image = CloudinaryField('image', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True, help_text="Certificate image (jpg, png, etc.)")
+    document = CloudinaryField('document', blank=True, null=True, help_text="Certificate PDF document")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
