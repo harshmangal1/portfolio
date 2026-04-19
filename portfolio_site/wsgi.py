@@ -8,3 +8,4 @@ application = get_wsgi_application()
 
 if os.environ.get('RENDER') == 'true':
     execute_from_command_line(['manage.py', 'migrate', '--noinput'])
+    execute_from_command_line(['manage.py', 'create_superuser'])
