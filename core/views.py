@@ -101,10 +101,8 @@ def certifications(request):
 
 
 def certification_detail(request, credential_id):
-    cert = Certification.objects.filter(credential_id=credential_id).first()
-    if not cert:
-        from django.shortcuts import get_object_or_404
-        get_object_or_404(Certification, credential_id=credential_id)
+    from django.shortcuts import get_object_or_404
+    cert = get_object_or_404(Certification, credential_id=credential_id)
     return render(request, 'core/certification_detail.html', {'cert': cert})
 
 
